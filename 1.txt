@@ -1,0 +1,55 @@
+CREATE TABLE Students (
+    Student_ID INT PRIMARY KEY AUTO_INCREMENT,
+    Name VARCHAR(100),
+    DOB DATE,
+    Gender VARCHAR(10),
+    Address TEXT,
+    Contact VARCHAR(15)
+);
+
+CREATE TABLE Faculty (
+    Faculty_ID INT PRIMARY KEY AUTO_INCREMENT,
+    Name VARCHAR(100),
+    Email VARCHAR(100) UNIQUE,
+    Contact VARCHAR(15),
+    Department VARCHAR(100)
+);
+
+CREATE TABLE Courses (
+    Course_ID INT PRIMARY KEY AUTO_INCREMENT,
+    Course_Name VARCHAR(100),
+    Credits INT,
+    Faculty_ID INT,
+    FOREIGN KEY (Faculty_ID) REFERENCES Faculty(Faculty_ID) ON DELETE SET NULL
+);
+
+CREATE TABLE Enrollment (
+    Enrollment_ID INT PRIMARY KEY AUTO_INCREMENT,
+    Student_ID INT,
+    Course_ID INT,
+    Enrollment_Date DATE,
+    FOREIGN KEY (Student_ID) REFERENCES Students(Student_ID) ON DELETE CASCADE,
+    FOREIGN KEY (Course_ID) REFERENCES Courses(Course_ID) ON DELETE CASCADE
+);
+
+CREATE TABLE Attendance (
+    Attendance_ID INT PRIMARY KEY AUTO_INCREMENT,
+    Student_ID INT,
+    Course_ID INT,
+    Date DATE,
+    Status ENUM('Present', 'Absent'),
+    FOREIGN KEY (Student_ID) REFERENCES Students(Student_ID),
+    FOREIGN KEY (Course_ID) REFERENCES Courses(Course_ID)
+);
+
+CREATE TABLE Grades (
+    Grade_ID INT PRIMARY KEY AUTO_INCREMENT,
+    Student_ID INT,
+    Course_ID INT,
+    Grade CHAR(2),
+    FOREIGN KEY (Student_ID) REFERENCES Students(Student_ID),
+    FOREIGN KEY (Course_ID) REFERENCES Courses(Course_ID)
+);
+
+
+
